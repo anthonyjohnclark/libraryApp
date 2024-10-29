@@ -2,7 +2,7 @@ using Application.Books;
 
 namespace API.Controllers
 {
-    // [Authorize]
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class BooksController : BaseAPIController
@@ -52,7 +52,7 @@ namespace API.Controllers
 
         // Endpoint for Book Checkout by a Customer
         [HttpPost("{id}/{custId}/checkout")]
-        // [Authorize(Roles = "Customer")]
+        [Authorize(Roles = "Customer")]
         public async Task<IActionResult> CheckoutBook(int id, string custId)
         {
             return Ok(await Mediator.Send(new CheckoutBook.Command { BookId = id, CustomerId = custId }));
