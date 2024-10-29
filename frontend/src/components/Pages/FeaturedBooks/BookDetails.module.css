@@ -1,0 +1,33 @@
+.container {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.coverImage {
+  max-width: 200px;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.details {
+  margin-top: 10px;
+}
+
+.sectionTitle {
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+.reviewItem {
+  padding: 10px;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.status {
+  color: green;
+  font-weight: bold;
+}
