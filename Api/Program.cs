@@ -42,11 +42,12 @@ var context = services.GetRequiredService<DataContext>();
 var userManager = services.GetRequiredService<UserManager<AppUser>>();
 var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
 
-// await StartupTasks.CreateRoles(roleManager, userManager);
+await StartupTasks.CreateRoles(roleManager, userManager);
 
 if (app.Environment.IsDevelopment())
 {
-    //seedd data
+    await StartupTasks.CreateTestUsers(userManager, builder.Configuration);
+    await StartupTasks.SeedBookData(context);
 }
 
 app.UseRouting();

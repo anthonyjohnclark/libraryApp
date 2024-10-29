@@ -1,4 +1,5 @@
 using Application.Authentication;
+using Application.Books;
 using MediatR;
 
 namespace Api.Extensions;
@@ -39,9 +40,13 @@ public static class ApplicationServiceExtensions
 
         services.AddAutoMapper(typeof(MappingProfiles).Assembly);
 
-        services.AddScoped<AuthenticationServices>();
-
         services.AddMediatR(typeof(MappingProfiles).Assembly);
+        services.AddMediatR(typeof(BookService).Assembly);
+
+        services.AddScoped<AuthenticationServices>();
+        services.AddScoped<BookService>();
+
+        services.AddSingleton<StartupTasks>();
 
         return services;
     }

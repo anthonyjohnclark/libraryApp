@@ -8,3 +8,10 @@ public class AppUser : IdentityUser
 }
 
 
+public class Customer : AppUser
+{
+    public ICollection<CustomerReview> CustomerReviews { get; set; }
+}
+
+public class Librarian : AppUser
+{ }
