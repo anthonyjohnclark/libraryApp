@@ -63,6 +63,9 @@ const LoginPage = () => {
           >
             <LoginFields errors={formErrors} />
           </Form>
+          <Nav.Link as={Link} to="/signUp" className={classes.SignUpLink}>
+            Want to sign up?
+          </Nav.Link>
         </Container>
       </AsyncComponent>
     );
@@ -77,11 +80,7 @@ const LoginPage = () => {
       <Card className={classes.LoginPage}>
         <Card.Body style={{ width: "75vw", backgroundColor: "#29335c" }}>
           <FormProvider {...formMethods}>{renderForm()}</FormProvider>
-          <div className="text-center mt-3">
-            <Nav.Link as={Link} to="/signUp" className={classes.SignUpLink}>
-              Want to sign up?
-            </Nav.Link>
-          </div>
+          <div className="text-center mt-3"></div>
         </Card.Body>
       </Card>
     </Container>

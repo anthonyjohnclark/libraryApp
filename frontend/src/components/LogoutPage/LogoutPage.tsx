@@ -27,7 +27,6 @@ const LogoutPage = () => {
 
   return (
     <>
-      <h2>Logging out...</h2>
       <AsyncComponent requestStatus={requestStatus} apiError={apiError}>
         {""}
       </AsyncComponent>
