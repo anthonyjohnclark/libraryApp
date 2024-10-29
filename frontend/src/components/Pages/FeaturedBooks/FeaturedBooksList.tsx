@@ -23,8 +23,12 @@ import {
   FaTimes,
   FaCheckCircle,
   FaTimesCircle,
+  FaPlus,
 } from "react-icons/fa"; // Import sort icons and additional icons
 import { Book, IQueryParams } from "./FeaturedBooks";
+import AddBookModal from "./modals/AddBookModal";
+import { useModal } from "../../../hooks/GlobalHooks/useModalHook";
+import { useIdentity } from "../../../hooks/GlobalHooks/useIdentityHook";
 
 interface IFeaturedBookList {
   books: Book[];
@@ -47,6 +51,7 @@ interface IFeaturedBookList {
     callback: (options: any[]) => void
   ) => void; // New prop to load author options
   handleAuthorChange: (selectedOptions: any) => void;
+  fetchBooks: () => Promise<void>;
 }
 
 const FeaturedBookList: React.FC<IFeaturedBookList> = ({
@@ -57,9 +62,24 @@ const FeaturedBookList: React.FC<IFeaturedBookList> = ({
   setSelectedAuthors,
   loadAuthorOptions,
   handleAuthorChange,
+  fetchBooks,
 }) => {
   const navigate = useNavigate(); // Initialize navigate function for routing
   const [searchTitle, setSearchTitle] = useState(queryParams.title);
+  const { renderModal } = useModal();
+  const { loggedInUser } = useIdentity();
+
+  const handleAddBook = () => {
+    renderModal({
+      modalTitle: "Add a New Book",
+      modalBody: <AddBookModal fetchBooks={fetchBooks} />,
+      confirmButton: false,
+      showConfirmButton: false,
+      showCancelButton: true,
+      cancelButtonText: "Close",
+      continueButtonText: "",
+    });
+  };
 
   const debouncedUpdateQueryParams = useCallback(
     debounce((newTitle: string) => {
@@ -216,10 +236,10 @@ const FeaturedBookList: React.FC<IFeaturedBookList> = ({
     );
 
   return (
-    <div className="container mt-4">
+    <div className="container mt-0 pt-3 mb-0">
       <h2 className={classes.BookListHeader}>Book List</h2>
       <Form>
-        <Row className="align-items-center mb-3">
+        <Row className="align-items-center mb-3 justify-content-between">
           <Col md={4}>
             <InputGroup>
               <InputGroup.Text>
@@ -235,7 +255,7 @@ const FeaturedBookList: React.FC<IFeaturedBookList> = ({
               </Button>
             </InputGroup>
           </Col>
-          <Col md={5}>
+          <Col md={3}>
             <InputGroup>
               <InputGroup.Text>
                 <FaFilter />
@@ -252,6 +272,15 @@ const FeaturedBookList: React.FC<IFeaturedBookList> = ({
             </InputGroup>
           </Col>
           <Col md={2} className="d-flex align-items-center">
+            {loggedInUser?.role === "Librarian" && (
+              <Col>
+                <Button variant="success" onClick={handleAddBook}>
+                  <FaPlus className="me-2" /> Add A Book
+                </Button>
+              </Col>
+            )}
+          </Col>
+          <Col md={2} className="d-flex align-items-center">
             <Form.Check
               type="checkbox"
               label="Show Available Only"
@@ -261,13 +290,11 @@ const FeaturedBookList: React.FC<IFeaturedBookList> = ({
             />
           </Col>
           <Col md={1} className="d-flex justify-content-end">
-            <Button
-              variant="secondary"
-              onClick={handleClearFilters}
-              className="me-2"
-            >
-              <FaTimes /> Clear
-            </Button>
+            <Col>
+              <Button variant="secondary" onClick={handleClearFilters}>
+                <FaTimes /> Clear
+              </Button>
+            </Col>
           </Col>
         </Row>
       </Form>
@@ -314,7 +341,7 @@ const FeaturedBookList: React.FC<IFeaturedBookList> = ({
           })}
         </tbody>
       </Table>
-      <Pagination className="d-flex justify-content-center mt-3">
+      <Pagination className="d-flex justify-content-center mt-3 mb-0 pb-2">
         <Pagination.Prev
           onClick={() =>
             updateQueryParams({

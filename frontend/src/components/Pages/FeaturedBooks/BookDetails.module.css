@@ -6,6 +6,18 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+.BackToBooksLink {
+  color: #dee5e5;
+  text-align: center;
+  font-weight: bold;
+  text-decoration: none;
+  margin-top: 10px;
+}
+.BackToBooksLink:hover {
+  color: #dee5e5;
+  text-decoration: underline;
+}
+
 .coverImage {
   max-width: 200px;
   height: auto;

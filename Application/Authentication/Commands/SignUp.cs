@@ -11,6 +11,8 @@ public class SignUp
     public class Command : IRequest<Result<Unit>>
     {
         public SignUpDTO SignUpDto { get; set; }
+
+        // public string Origin { get; set; }
     }
     public class Handler : IRequestHandler<Command, Result<Unit>>
     {
@@ -28,7 +30,7 @@ public class SignUp
                 return Result<Unit>.Failure("Email already exists.");
             }
 
-            var user = new AppUser();
+            var user = CreateUserBasedOnRole(request.SignUpDto);
 
             var result = await _userManager.CreateAsync(user, request.SignUpDto.Password);
 
@@ -50,6 +52,38 @@ public class SignUp
 
             else
                 return Result<Unit>.Failure("Problem registering user.");
+        }
+
+
+        private AppUser CreateUserBasedOnRole(SignUpDTO signUpDto)
+        {
+            if (signUpDto.Role == "Customer")
+            {
+                return new Customer
+                {
+                    DisplayName = signUpDto.DisplayName,
+                    Email = signUpDto.Email,
+                    UserName = signUpDto.Email
+                };
+            }
+            else if (signUpDto.Role == "Librarian")
+            {
+                return new Librarian
+                {
+                    DisplayName = signUpDto.DisplayName,
+                    Email = signUpDto.Email,
+                    UserName = signUpDto.Email
+                };
+            }
+            else
+            {
+                return new AppUser
+                {
+                    DisplayName = signUpDto.DisplayName,
+                    Email = signUpDto.Email,
+                    UserName = signUpDto.Email
+                };
+            }
         }
 
     }

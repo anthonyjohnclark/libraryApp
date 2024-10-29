@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Row, Col, Image, Badge, Button } from "react-bootstrap";
+import { Row, Col, Image, Badge, Button, Container } from "react-bootstrap";
 import AsyncComponent from "../../hoc/AsyncComponent";
 import styles from "./BookDetails.module.css";
 import { useIdentity } from "../../../hooks/GlobalHooks/useIdentityHook";
@@ -12,7 +12,7 @@ import EditBookModal from "./modals/EditBookModal";
 import ReturnBookModal from "./modals/ReturnBookModal"; // Import the new ReturnBookModal
 import useAPIRequest from "../../../hooks/GlobalHooks/useAPIRequest";
 import agent from "../../../api/agent";
-import { Book } from "./FeaturedBooks";
+import { FaArrowLeft } from "react-icons/fa";
 
 export interface IBookDetails {
   id: number;
@@ -131,15 +131,15 @@ const BookDetails = () => {
     <>
       <Button
         variant="link"
+        className={styles.BackToBooksLink}
         onClick={() => navigate("/books/featured")}
-        className="mb-3"
       >
+        <FaArrowLeft className="me-2" />
         Back to Featured Book List
       </Button>
-
       <AsyncComponent requestStatus={requestStatus} apiError={apiError}>
         {book ? (
-          <div className={styles.container}>
+          <Container className={styles.container}>
             <Row>
               <Col md={4}>
                 <Image
@@ -254,7 +254,7 @@ const BookDetails = () => {
                 <p>No reviews available.</p>
               )}
             </div>
-          </div>
+          </Container>
         ) : (
           <div>Loading book details...</div>
         )}

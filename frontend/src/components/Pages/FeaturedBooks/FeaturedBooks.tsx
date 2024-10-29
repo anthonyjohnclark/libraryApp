@@ -1,14 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
-import { useIdentity } from "../../../hooks/GlobalHooks/useIdentityHook";
-import { useModal } from "../../../hooks/GlobalHooks/useModalHook";
 import FeaturedBooksList from "./FeaturedBooksList";
-import { Button } from "react-bootstrap";
-import { FaPlus } from "react-icons/fa";
 import AsyncComponent from "../../hoc/AsyncComponent";
 import useAPIRequest from "../../../hooks/GlobalHooks/useAPIRequest";
 import agent from "../../../api/agent";
-import AddBookModal from "./modals/AddBookModal";
-import classes from "./FeaturedBooks.module.css";
 
 export interface Book {
   id: string;
@@ -33,9 +27,6 @@ export interface IQueryParams {
 }
 
 const FeaturedBooks = () => {
-  const { renderModal } = useModal();
-  const { loggedInUser } = useIdentity();
-
   const [books, setBooks] = useState<Book[]>([]);
   const [authorOptions, setAuthorOptions] = useState<any[]>([]);
   const [selectedAuthors, setSelectedAuthors] = useState<any[]>([]);
@@ -147,40 +138,19 @@ const FeaturedBooks = () => {
     fetchBooks();
   }, [fetchBooks]);
 
-  const handleAddBook = () => {
-    renderModal({
-      modalTitle: "Add a New Book",
-      modalBody: <AddBookModal fetchBooks={fetchBooks} />,
-      confirmButton: false,
-      showConfirmButton: false,
-      showCancelButton: true,
-      cancelButtonText: "Close",
-      continueButtonText: "",
-    });
-  };
-
   return (
-    <>
-      <div className="d-flex justify-content-between align-items-center mb-3">
-        <h2 className={classes.FeaturedBooksTitle}>Featured Books</h2>
-        {loggedInUser?.role === "Librarian" && ( // Display button only for librarians
-          <Button variant="success" onClick={handleAddBook}>
-            <FaPlus className="me-2" /> Add A Book
-          </Button>
-        )}
-      </div>
-      <AsyncComponent requestStatus={requestStatus} apiError={apiError}>
-        <FeaturedBooksList
-          books={books}
-          updateQueryParams={updateQueryParams}
-          queryParams={queryParams}
-          selectedAuthors={selectedAuthors} // Pass selectedAuthors
-          loadAuthorOptions={loadAuthorOptions}
-          handleAuthorChange={handleAuthorChange}
-          setSelectedAuthors={setSelectedAuthors} // Pass author options loader
-        />
-      </AsyncComponent>
-    </>
+    <AsyncComponent requestStatus={requestStatus} apiError={apiError}>
+      <FeaturedBooksList
+        books={books}
+        updateQueryParams={updateQueryParams}
+        queryParams={queryParams}
+        selectedAuthors={selectedAuthors} // Pass selectedAuthors
+        loadAuthorOptions={loadAuthorOptions}
+        handleAuthorChange={handleAuthorChange}
+        setSelectedAuthors={setSelectedAuthors}
+        fetchBooks={fetchBooks}
+      />
+    </AsyncComponent>
   );
 };
 

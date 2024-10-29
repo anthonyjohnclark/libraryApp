@@ -49,7 +49,7 @@ const LeaveReviewModal: React.FC<LeaveReviewModalProps> = ({
     <AsyncComponent requestStatus={requestStatus} apiError={apiError}>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Form.Group controlId="rating">
-          <Form.Label>Rating</Form.Label>
+          <Form.Label>Rating (out of 5)</Form.Label>
           <Controller
             name="rating"
             control={control}

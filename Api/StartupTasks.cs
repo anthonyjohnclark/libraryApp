@@ -7,7 +7,7 @@ public class StartupTasks
     {
         // initializing custom roles 
         var RoleManager = roleManager;
-        string[] roleNames = { "Librarian", "Customer" };
+        string[] roleNames = { "Librarian", "Customer", "Test" };
         IdentityResult roleResult;
 
         foreach (var roleName in roleNames)
@@ -26,7 +26,7 @@ public class StartupTasks
         var UserManager = userManager;
 
         // Create Librarian User
-        var librarianTestUser = new AppUser
+        var librarianTestUser = new Librarian
         {
             UserName = config.GetSection("LibrarianUser").GetValue<string>("Username"),
             Email = config.GetSection("LibrarianUser").GetValue<string>("UserEmail"),
@@ -51,7 +51,7 @@ public class StartupTasks
         }
 
         // Create Customer User
-        var customerTestUser = new AppUser
+        var customerTestUser = new Customer
         {
             UserName = config.GetSection("CustomerUser").GetValue<string>("Username"),
             Email = config.GetSection("CustomerUser").GetValue<string>("UserEmail"),
