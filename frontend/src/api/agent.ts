@@ -3,6 +3,7 @@ import ILoginRequest from "../models/HookModels/GlobalHookModels/IdentityInterfa
 import IUser from "../models/HookModels/GlobalHookModels/IdentityInterfaces/IUser";
 import IAPIResponse from "../models/HookModels/GlobalHookModels/APIInterfaces/IAPIResponse";
 import ISignUpRequest from "../models/HookModels/GlobalHookModels/IdentityInterfaces/ISignUpRequest";
+import { Book } from "../components/Pages/FeaturedBooks/FeaturedBooks";
 import qs from "qs";
 
 axios.defaults.baseURL = process.env.REACT_APP_API_URL;
@@ -57,8 +58,23 @@ const User = {
   logout: () => requests.post("/user/logout", {}),
 };
 
+const Books = {
+  getBookDetails: (id: string) => requests.get(`/books/${id}`),
+  getAuthors: () => requests.get<string[]>(`/books/authors`),
+  getBooks: (filterSearchParams: any) =>
+    requests.get<Book[]>(`/books/featured`, filterSearchParams),
+  addBook: (book: any) => requests.post("/books", book),
+  editBook: (id: number, book: any) => requests.put<Book>(`/books/${id}`, book),
+  deleteBook: (id: number) => requests.del(`/books/${id}`),
+  checkoutBook: (id: number, custId: string | undefined) =>
+    requests.post(`/books/${id}/${custId}/checkout`, {}),
+  returnBook: (id: number) => requests.post(`/books/${id}/return`, {}),
+  addReview: (review: any) => requests.post(`/books/review`, review),
+};
+
 const agent = {
   User,
+  Books,
 };
 
 export default agent;
