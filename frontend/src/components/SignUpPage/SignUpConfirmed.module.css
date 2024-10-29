@@ -1,0 +1,27 @@
+.SignUpConfirmed {
+  background-color: #f8f9fa;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  width: 100%;
+}
+
+h2 {
+  color: #29335c;
+  margin-bottom: 1rem;
+}
+
+p {
+  color: #6c757d;
+  margin-bottom: 2rem;
+}
+
+button {
+  background-color: #007bff;
+  border: none;
+}
+
+button:hover {
+  background-color: #0056b3;
+}

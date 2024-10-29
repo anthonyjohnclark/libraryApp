@@ -1,0 +1,36 @@
+/*! `Custom` Bootstrap 4 theme */
+@import url(https://fonts.googleapis.com/css2?family=Anek+Devanagari:wght@200&family=Roboto+Condensed:wght@300;400&display=swap);
+$font-family: Anek Devanagari;
+@import url(https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400&display=swap);
+$headings-font-family: Roboto Condensed;
+
+$enable-grid-classes: false;
+$primary: #29335c;
+$secondary: #363636;
+$success: #51783f;
+$danger: #a4031f;
+$info: #736b92;
+$warning: #fdcb6e;
+$light: #dee5e5;
+$dark: #221d23;
+@import "bootstrap";
+
+// Add SASS theme customizations here..
+html {
+  font-size: 0.8rem;
+}
+@include media-breakpoint-up(sm) {
+  html {
+    font-size: 0.9rem;
+  }
+}
+@include media-breakpoint-up(md) {
+  html {
+    font-size: 0.9rem;
+  }
+}
+@include media-breakpoint-up(lg) {
+  html {
+    font-size: 1rem;
+  }
+}

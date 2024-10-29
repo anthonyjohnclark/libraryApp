@@ -1,0 +1,22 @@
+.ModalStyles {
+  background-color: #221d23;
+  color: #dee5e5;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+.ModalHeader {
+  border: none;
+  font-weight: bold;
+  padding: 0.5em;
+}
+
+.ModalFooter {
+  border: none;
+}
+
+.ModalBody {
+  padding: 0;
+  margin: 0;
+}
