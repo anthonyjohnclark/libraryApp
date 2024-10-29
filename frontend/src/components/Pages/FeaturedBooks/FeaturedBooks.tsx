@@ -8,6 +8,7 @@ import AsyncComponent from "../../hoc/AsyncComponent";
 import useAPIRequest from "../../../hooks/GlobalHooks/useAPIRequest";
 import agent from "../../../api/agent";
 import AddBookModal from "./modals/AddBookModal";
+import classes from "./FeaturedBooks.module.css";
 
 export interface Book {
   id: string;
@@ -161,7 +162,7 @@ const FeaturedBooks = () => {
   return (
     <>
       <div className="d-flex justify-content-between align-items-center mb-3">
-        <h2>Featured Books</h2>
+        <h2 className={classes.FeaturedBooksTitle}>Featured Books</h2>
         {loggedInUser?.role === "Librarian" && ( // Display button only for librarians
           <Button variant="success" onClick={handleAddBook}>
             <FaPlus className="me-2" /> Add A Book

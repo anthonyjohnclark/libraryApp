@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom"; // Import useNavigate for routin
 import AsyncSelect from "react-select/async"; // Import AsyncSelect for autocomplete
 import { useTable, usePagination } from "react-table";
 import debounce from "lodash.debounce";
+import classes from "./FeaturedBooksList.module.css";
 
 import {
   Table,
@@ -216,7 +217,7 @@ const FeaturedBookList: React.FC<IFeaturedBookList> = ({
 
   return (
     <div className="container mt-4">
-      <h2 className="mb-3">Book List</h2>
+      <h2 className={classes.BookListHeader}>Book List</h2>
       <Form>
         <Row className="align-items-center mb-3">
           <Col md={4}>
@@ -253,10 +254,10 @@ const FeaturedBookList: React.FC<IFeaturedBookList> = ({
           <Col md={2} className="d-flex align-items-center">
             <Form.Check
               type="checkbox"
-              label="Available"
+              label="Show Available Only"
               onChange={toggleAvailability}
               checked={!!queryParams.isAvailable}
-              className="ms-2"
+              className={classes.FormCheckWhite}
             />
           </Col>
           <Col md={1} className="d-flex justify-content-end">

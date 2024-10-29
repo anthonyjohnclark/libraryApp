@@ -7,7 +7,7 @@ interface Props {
 const NavBarItems = ({ displayName }: Props) => {
   return (
     <>
-      <NavigationLink linkTo={"profile"}> {displayName}</NavigationLink>
+      <NavigationLink linkTo={"profile"}>Welcome, {displayName}</NavigationLink>
       <Nav
         className="ml-auto text-center w-100 d-flex justify-content-end pr-5"
         style={{ whiteSpace: "nowrap" }}

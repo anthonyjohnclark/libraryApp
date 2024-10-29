@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Card, Container, Form } from "react-bootstrap";
+import { Nav, Card, Container, Form } from "react-bootstrap";
 import { useForm, FormProvider } from "react-hook-form";
 
 import ILoginRequest from "../../models/HookModels/GlobalHookModels/IdentityInterfaces/ILoginRequest";
@@ -10,8 +10,8 @@ import { useIdentity } from "../../hooks/GlobalHooks/useIdentityHook";
 import LoginFields from "./LoginFields";
 
 import classes from "./LoginPage.module.css";
-import NavigationLink from "../hoc/NavigationLink";
 import AsyncComponent from "../hoc/AsyncComponent";
+import { Link } from "react-router-dom";
 
 const LoginPage = () => {
   const formMethods = useForm();
@@ -28,7 +28,6 @@ const LoginPage = () => {
   useEffect(() => {
     if (apiError !== null) {
       formMethods.clearErrors();
-
       switch (apiError) {
         case "Email not found.":
           formMethods.setError("email", {
@@ -45,14 +44,14 @@ const LoginPage = () => {
         default:
           return;
       }
-    } else return;
+    }
   }, [formMethods, apiError, formMethods.setError]);
 
   const renderForm = () => {
     return (
       <AsyncComponent requestStatus={requestStatus} apiError={apiError}>
         <Container>
-          <h1>Login</h1>
+          <h1 className={classes.LoginHeading}>Login</h1>
           <Form
             onSubmit={formMethods.handleSubmit(() =>
               executeAPIRequest(() =>
@@ -62,7 +61,7 @@ const LoginPage = () => {
             encType="multipart/form-data"
             autoComplete="on"
           >
-            <LoginFields errors={formErrors}></LoginFields>
+            <LoginFields errors={formErrors} />
           </Form>
         </Container>
       </AsyncComponent>
@@ -78,8 +77,12 @@ const LoginPage = () => {
       <Card className={classes.LoginPage}>
         <Card.Body style={{ width: "75vw", backgroundColor: "#29335c" }}>
           <FormProvider {...formMethods}>{renderForm()}</FormProvider>
+          <div className="text-center mt-3">
+            <Nav.Link as={Link} to="/signUp" className={classes.SignUpLink}>
+              Want to sign up?
+            </Nav.Link>
+          </div>
         </Card.Body>
-        <NavigationLink linkTo={"signUp"}>{"Want to sign up?"}</NavigationLink>
       </Card>
     </Container>
   );

@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Card, Container, Form } from "react-bootstrap";
+import { Nav, Card, Container, Form } from "react-bootstrap";
 import { useForm, FormProvider } from "react-hook-form";
 
 import ISignUpRequest from "../../models/HookModels/GlobalHookModels/IdentityInterfaces/ISignUpRequest";
@@ -7,10 +7,9 @@ import useAPIRequest from "../../hooks/GlobalHooks/useAPIRequest";
 
 import SignInFields from "./SignUpFields";
 import classes from "./SignUpPage.module.css";
-import NavigationLink from "../hoc/NavigationLink";
 import agent from "../../api/agent";
 import AsyncComponent from "../hoc/AsyncComponent";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const SignUpPage = () => {
   const formMethods = useForm();
@@ -33,14 +32,14 @@ const SignUpPage = () => {
         default:
           return;
       }
-    } else return;
+    }
   }, [formMethods, apiError, formMethods.setError]);
 
   const renderForm = () => {
     return (
       <AsyncComponent requestStatus={requestStatus} apiError={apiError}>
         <Container>
-          <h1>Sign Up</h1>
+          <h1 className={classes.SignUpHeading}>Sign Up</h1>
           <Form
             onSubmit={formMethods.handleSubmit(() =>
               executeAPIRequest(() =>
@@ -64,18 +63,22 @@ const SignUpPage = () => {
   return (
     <Container
       fluid
-      className="p-0 d-flex justify-content-center flex-column"
+      className="p-0 d-flex justify-content-center align-items-center"
       style={{ height: "100vh" }}
     >
-      <Card className={classes.SignInPage}>
-        <Card.Body style={{ width: "75vw", backgroundColor: "#29335c" }}>
+      <Card
+        className={classes.SignUpPage}
+        style={{ width: "75vw", backgroundColor: "#29335c" }}
+      >
+        <Card.Body>
           <FormProvider {...formMethods}>{renderForm()}</FormProvider>
         </Card.Body>
+        <div className="text-center mt-3">
+          <Nav.Link as={Link} to="/login" className={classes.NavLink}>
+            Already have an account? Log in
+          </Nav.Link>
+        </div>
       </Card>
-
-      <NavigationLink linkTo={"login"}>
-        {"Already have an account? Log in"}
-      </NavigationLink>
     </Container>
   );
 };
