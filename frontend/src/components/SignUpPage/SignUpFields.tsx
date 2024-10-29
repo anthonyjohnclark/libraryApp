@@ -116,7 +116,6 @@ const SignUpFields = ({ errors }: Props) => {
           <option value="">Select Role</option>
           <option value="Librarian">Librarian</option>
           <option value="Customer">Customer</option>
-          <option value="Other">Other</option>
         </Form.Control>
         {errors.role && (
           <Alert variant="danger" className="mt-2">

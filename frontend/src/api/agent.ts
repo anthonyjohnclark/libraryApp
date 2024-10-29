@@ -5,6 +5,7 @@ import IAPIResponse from "../models/HookModels/GlobalHookModels/APIInterfaces/IA
 import ISignUpRequest from "../models/HookModels/GlobalHookModels/IdentityInterfaces/ISignUpRequest";
 import { Book } from "../components/Pages/FeaturedBooks/FeaturedBooks";
 import qs from "qs";
+import { IBookDetails } from "../components/Pages/FeaturedBooks/BookDetails";
 
 axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
@@ -59,7 +60,7 @@ const User = {
 };
 
 const Books = {
-  getBookDetails: (id: string) => requests.get(`/books/${id}`),
+  getBookDetails: (id: string) => requests.get<IBookDetails>(`/books/${id}`),
   getAuthors: () => requests.get<string[]>(`/books/authors`),
   getBooks: (filterSearchParams: any) =>
     requests.get<Book[]>(`/books/featured`, filterSearchParams),
