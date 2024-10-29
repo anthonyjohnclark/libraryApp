@@ -43,3 +43,4 @@ yarn-error.log*
 .vscode
 .env.production
 /launchSettings.json
+api/wwwroot/dist/
