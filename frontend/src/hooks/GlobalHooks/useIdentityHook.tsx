@@ -10,9 +10,7 @@ import IIdentityContext from "../../models/HookModels/GlobalHookModels/IdentityI
 import agent from "../../api/agent";
 import axios, { InternalAxiosRequestConfig } from "axios";
 import IUser from "../../models/HookModels/GlobalHookModels/IdentityInterfaces/IUser";
-import ILoginRequest from "../../models/HookModels/GlobalHookModels/IdentityInterfaces/ILoginRequest";
 import { useLocation, useNavigate } from "react-router-dom";
-import IAPIResponse from "../../models/HookModels/GlobalHookModels/APIInterfaces/IAPIResponse";
 
 const identityContext = createContext<IIdentityContext>({} as IIdentityContext);
 
@@ -125,16 +123,11 @@ const useProvideIdentity = () => {
     }
   }, [token]);
 
-  const logThemIn = async (creds: ILoginRequest) => {
-    try {
-      const response = await agent.User.login(creds);
-      if (response.token) {
-        setTokenToBrowser(response.token);
-        setToken(response.token);
-        navigate(from, { replace: true });
-      }
-    } catch (error) {
-      console.error(error);
+  const logThemIn = async (token: any) => {
+    if (token) {
+      setTokenToBrowser(token);
+      setToken(token);
+      navigate(from, { replace: true });
     }
   };
 

@@ -12,40 +12,15 @@ import LoginFields from "./LoginFields";
 import classes from "./LoginPage.module.css";
 import AsyncComponent from "../hoc/AsyncComponent";
 import { Link } from "react-router-dom";
+import agent from "../../api/agent";
 
 const LoginPage = () => {
   const formMethods = useForm();
   const identity = useIdentity();
 
-  const LoginRequest = (data: ILoginRequest) => {
-    return identity.logThemIn(data);
-  };
-
   const { executeAPIRequest, requestStatus, apiError } = useAPIRequest();
 
   const formErrors = formMethods.formState.errors;
-
-  useEffect(() => {
-    if (apiError !== null) {
-      formMethods.clearErrors();
-      switch (apiError) {
-        case "Email not found.":
-          formMethods.setError("email", {
-            type: "emailNotFound",
-            message: "Oops! We don't have a user with that email!",
-          });
-          break;
-        case "Invalid password.":
-          formMethods.setError("password", {
-            type: "apiSignInPassword",
-            message: "Looks like you've entered the wrong password, try again!",
-          });
-          break;
-        default:
-          return;
-      }
-    }
-  }, [formMethods, apiError, formMethods.setError]);
 
   const renderForm = () => {
     return (
@@ -55,7 +30,13 @@ const LoginPage = () => {
           <Form
             onSubmit={formMethods.handleSubmit(() =>
               executeAPIRequest(() =>
-                LoginRequest(formMethods.getValues() as ILoginRequest)
+                agent.User.login(formMethods.getValues() as ILoginRequest).then(
+                  (response) => {
+                    if (response.token) {
+                      identity.logThemIn(response.token);
+                    }
+                  }
+                )
               )
             )}
             encType="multipart/form-data"

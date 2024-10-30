@@ -18,23 +18,6 @@ const SignUpPage = () => {
   const { executeAPIRequest, requestStatus, apiError } = useAPIRequest();
   const formErrors = formMethods.formState.errors;
 
-  useEffect(() => {
-    if (apiError !== null) {
-      formMethods.clearErrors();
-
-      switch (apiError) {
-        case "Email already exists.":
-          formMethods.setError("email", {
-            type: "emailAlreadyExists",
-            message: "This email is already associated with an account.",
-          });
-          break;
-        default:
-          return;
-      }
-    }
-  }, [formMethods, apiError, formMethods.setError]);
-
   const renderForm = () => {
     return (
       <AsyncComponent requestStatus={requestStatus} apiError={apiError}>
@@ -45,8 +28,10 @@ const SignUpPage = () => {
               executeAPIRequest(() =>
                 agent.User.signUp(
                   formMethods.getValues() as ISignUpRequest
-                ).then(() => {
-                  navigate("/signUpConfirmed");
+                ).then((response) => {
+                  if (response.isSuccess) {
+                    navigate("/signUpConfirmed");
+                  }
                 })
               )
             )}

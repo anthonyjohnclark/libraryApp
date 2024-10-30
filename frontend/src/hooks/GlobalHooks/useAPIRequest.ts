@@ -32,7 +32,9 @@ const useAPIRequest = () => {
           }
         } catch (error: AxiosError | any) {
           setStatus("error");
-          setError(error.response?.data as string);
+          setError(
+            (error.response?.data?.error as string) ?? error.response?.data
+          );
           reject(error);
         }
       }, timeout);
